@@ -27,8 +27,11 @@
 		<style>
 			* {
 				box-sizing: border-box;
+			}
+			body {
 				font-family: "Inter", sans-serif;
 				font-size: 16px;
+				font-weight: 400;
 			}
 			.geist {
 				font-family: "Geist", sans-serif;
@@ -38,6 +41,9 @@
 				margin: auto;
 				padding-right: 15px;
 				padding-left: 15px;
+			}
+			button {
+				cursor: pointer;
 			}
 		</style>
 	</head>
@@ -70,7 +76,7 @@
 							</div>
 							<ul
 								tabindex="0"
-								class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
+								class="menu menu-sm dropdown-content rounded-box z-1 mt-3 w-52 p-2 shadow"
 							>
 								<li>
 									<a class="text-[16px] font-medium">
@@ -125,7 +131,60 @@
 		<!-- Header Area End -->
 
 		<!-- Main Area Start -->
-		<main></main>
+		<main>
+			<!-- Hero Area Start -->
+			<section class="hero-area bg-[#CFF0DC] overflow-hidden">
+				<div class="container">
+					<div
+						class="hero-wrrper relative py-14 md:py-16 xl:py-[100px]"
+					>
+						<!-- Left Leaf -->
+						<div
+							class="left-leaf absolute -left-20 md:-left-10 lg:-left-20 xl:-left-32 bottom-0"
+						>
+							<img
+								class="w-48 md:w-[250px] lg:w-[300px] xl:w-[450px] 2xl:w-full"
+								src="images/hero-left-leaf.png"
+								alt="Hero Area Left Leaf"
+							/>
+						</div>
+						<!-- Right Leaf -->
+						<div
+							class="right-leaf absolute -right-20 md:-right-10 lg:-right-20 xl:-right-32 bottom-0"
+						>
+							<img
+								class="w-48 md:w-[250px] lg:w-[300px] xl:w-[450px] 2xl:w-full"
+								src="images/hero-right-leaf.png"
+								alt="Hero Area Right Leaf"
+							/>
+						</div>
+
+						<!-- Hero Content -->
+						<div>
+							<h1
+								class="text-[#1F2937] text-[26px] md:text-[40px] lg:text-[48px] font-bold text-center"
+							>
+								Plant a Tree, Grow a Future
+							</h1>
+							<p
+								class="max-w-[583px] mx-auto text-[#1F2937] text-center"
+							>
+								Join our mission to plant 1 million trees and
+								make the Earth greener for future generations.
+							</p>
+							<div class="text-center mt-6">
+								<button
+									class="text-[#15803D] font-medium py-3 px-5 bg-[#FACC15] rounded-full"
+								>
+									Get Involved
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<!-- Hero Area End -->
+		</main>
 		<!-- Main Area End -->
 
 		<!-- Footer Area Start -->

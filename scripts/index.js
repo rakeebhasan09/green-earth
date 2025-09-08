@@ -3,7 +3,8 @@ const getDate = new Date();
 const fullYear = getDate.getFullYear();
 document.getElementById("footer-year").innerText = fullYear;
 
-const myCart = document.getElementById("cart-items");
+const myDesktopCart = document.getElementById("cart-items-desktop");
+const myMobileCart = document.getElementById("mobile-cart-items");
 
 // Load Categories
 fetch("https://openapi.programming-hero.com/api/categories")
@@ -18,7 +19,32 @@ const displayCategoris = (categories) => {
 	};
 	categories.unshift(firstElement);
 	const categoryParent = document.getElementById("tree-categories-parent");
+	const categoryParentMobile = document.getElementById(
+		"tree-categories-parent-mobile"
+	);
 	categoryParent.innerHTML = "";
+	categoryParentMobile.innerHTML = "";
+	categories.forEach((category, index) => {
+		const activeClass = index === 0 ? "bg-[#15803D] text-white" : "";
+		categoryParent.innerHTML += `
+			<button
+					id='category${category.id}'
+					onclick='loadPlantByCategory(${category.id})'
+		            class="category-btn text-[#1F2937] text-[16px] font-normal py-2 px-3 rounded hover:bg-[#15803D] hover:text-white w-full text-left transition-all duration-300 ${activeClass}"
+		        >
+		            ${category.category_name}
+		        </button>
+			`;
+		categoryParentMobile.innerHTML += `
+			<button
+					id='category${category.id}'
+					onclick='loadPlantByCategory(${category.id})'
+		            class="category-btn text-[#1F2937] text-[16px] font-normal py-2 px-3 rounded hover:bg-[#15803D] hover:text-white w-full text-left transition-all duration-300 ${activeClass}"
+		        >
+		            ${category.category_name}
+		        </button>
+			`;
+	});
 	// for (const category of categories) {
 	// 	const categoryBtn = document.createElement("div");
 	// 	categoryBtn.innerHTML = `
@@ -30,37 +56,37 @@ const displayCategoris = (categories) => {
 	//     `;
 	// 	categoryParent.appendChild(categoryBtn);
 	// }
-	categories.forEach((category, index) => {
-		const categoryBtn = document.createElement("div");
-		const activeClass = index === 0 ? "bg-[#15803D] text-white" : "";
-		categoryBtn.innerHTML = `
-			<button
-					id='category${category.id}'
-					onclick='loadPlantByCategory(${category.id})'
-		            class="category-btn text-[#1F2937] text-[16px] font-normal py-2 px-3 rounded hover:bg-[#15803D] hover:text-white w-full text-left transition-all duration-300 ${activeClass}"
-		        >
-		            ${category.category_name}
-		        </button>
-			`;
-		categoryParent.appendChild(categoryBtn);
-	});
-};
 
-// Handle Active
-document.getElementById("all-categories").addEventListener("click", (e) => {
-	if (e.target.className.includes("category-btn")) {
-		const categoryButtonsParent = document.getElementById("all-categories");
+	// Handle Active
+	document.getElementById("all-categories").addEventListener("click", (e) => {
+		if (e.target.className.includes("category-btn")) {
+			activeItemIndicator(e, "all-categories");
+		}
+	});
+
+	document
+		.getElementById("tree-categories-parent-mobile")
+		.addEventListener("click", (e) => {
+			if (e.target.className.includes("category-btn")) {
+				activeItemIndicator(e, "tree-categories-parent-mobile");
+			}
+		});
+
+	const activeItemIndicator = (e, parentId) => {
+		console.log(parentId);
+		const categoryButtonsParent = document.getElementById(parentId);
 		const allCategoryBtns =
 			categoryButtonsParent.querySelectorAll("button");
 		allCategoryBtns.forEach((singleCategoryBtn) => {
 			singleCategoryBtn.classList.remove("bg-[#15803D]", "text-white");
 		});
 		e.target.classList.add("bg-[#15803D]", "text-white");
-	}
-});
+	};
+};
 
 // Load Plant By Category
 const loadPlantByCategory = (id) => {
+	handleLoadingState();
 	if (id === 0) {
 		fetch(`https://openapi.programming-hero.com/api/plants`)
 			.then((plantsRes) => plantsRes.json())
@@ -86,7 +112,7 @@ const displayPlantsByCategory = (plants) => {
 			<!-- Single Card -->
 			<div
 				id="plant${plant.id}"
-				class="product-cart p-4 bg-white rounded-lg flex flex-col gap-y-3 h-full"
+				class="product-cart !max-h-max p-4 bg-white rounded-lg flex flex-col gap-y-3 h-full"
 			>
 				<!-- Image -->
 				<div class="h-[190px]">
@@ -99,6 +125,7 @@ const displayPlantsByCategory = (plants) => {
 				<!-- Content -->
 				<div class="flex-grow">
 					<h4
+						onclick="modalHandler(${plant.id})"
 						class="text-[#1F2937] text-[18px] font-semibold"
 					>
 						${plant.name}
@@ -106,7 +133,11 @@ const displayPlantsByCategory = (plants) => {
 					<p
 						class="py-2 text-[#1F2937] text-[12px] font-normal"
 					>
-						${plant.description}
+						${
+							plant.description.length > 100
+								? plant.description.slice(0, 100) + "..."
+								: plant.description
+						}
 					</p>
 					
 				</div>
@@ -164,9 +195,44 @@ const handleAddToCart = (e) => {
 // Show Cart Items
 const showCartItems = (cartProducts) => {
 	let total = 0;
-	myCart.innerHTML = "";
+	myDesktopCart.innerHTML = "";
+	myMobileCart.innerHTML = "";
 	cartProducts.forEach((cartProduct) => {
-		myCart.innerHTML += `
+		myDesktopCart.innerHTML += `
+			<div
+				class="py-2 px-3 bg-[#F0FDF4] rounded-lg flex items-center justify-between"
+			>
+				<div>
+					<h5
+						class="text-[#1F2937] text-[14px] font-semibold"
+					>
+						${cartProduct.title}
+					</h5>
+					<p
+						class="text-[#1F2937] text-[16px] font-normal"
+					>
+						৳ <span>${cartProduct.price}</span>
+					</p>
+				</div>
+				<div>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="30"
+						height="30"
+						viewBox="0 0 16 16"
+						fill="#f00"
+						class="cursor-pointer"
+						onclick="handleDeleteFromCart('${cartProduct.id}')"
+					>
+						<path
+							d="M12.6667 4.27337L11.7267 3.33337L8.00004 7.06004L4.27337 3.33337L3.33337 4.27337L7.06004 8.00004L3.33337 11.7267L4.27337 12.6667L8.00004 8.94004L11.7267 12.6667L12.6667 11.7267L8.94004 8.00004L12.6667 4.27337Z"
+							fill="#f00"
+						/>
+					</svg>
+				</div>
+			</div>
+		`;
+		myMobileCart.innerHTML += `
 			<div
 				class="py-2 px-3 bg-[#F0FDF4] rounded-lg flex items-center justify-between"
 			>
@@ -202,7 +268,8 @@ const showCartItems = (cartProducts) => {
 		`;
 		total += cartProduct.price;
 	});
-	document.getElementById("cart-total").innerText = total;
+	document.getElementById("desktop-cart-total").innerText = total;
+	document.getElementById("mobile-cart-total").innerText = total;
 };
 
 // Handle Delete From Cart
@@ -212,6 +279,57 @@ const handleDeleteFromCart = (productId) => {
 	);
 	cartProducts = cartAfterDelete;
 	showCartItems(cartProducts);
+};
+
+// Loading Handler
+const handleLoadingState = () => {
+	document.getElementById("all-plants-parent").innerHTML = `
+		<div
+			class="h-full col-span-12 flex items-center justify-center"
+		>
+			<span
+				class="loading loading-bars loading-xl"
+			></span>
+		</div>
+	`;
+};
+
+// Modal Handler
+const modalHandler = (id) => {
+	fetch(`https://openapi.programming-hero.com/api/plant/${id}`)
+		.then((modalRes) => modalRes.json())
+		.then((modalData) => displayDetailsUsingModal(modalData.plants));
+
+	const displayDetailsUsingModal = (plant) => {
+		const modalContent = document.getElementById("modal-content");
+		modalContent.innerHTML = `
+			<h3
+				class="text-[#1F2937] mb-2 text-[18px] font-semibold"
+			>
+				${plant.name}
+			</h3>
+			<!-- Image -->
+			<div class="h-[300px]">
+				<img
+					class="object-cover max-h-full w-full rounded-lg"
+					src="${plant.image}"
+					alt=""
+				/>
+			</div>
+			<p class="text-[#1F2937] mb-1 mt-1 text-[16px]">
+				<b class="font-semibold">Category:</b> ${plant.category}
+			</p>
+			<p class="text-[#1F2937] mb-1 text-[16px]">
+				<b class="font-semibold">Price: ৳</b>${plant.price}
+			</p>
+			<p class="text-[#1F2937] mb-1 text-[16px]">
+				<b class="font-semibold">Description:</b> ${plant.description}
+			</p>
+		`;
+		document.getElementById("trees_full_details").showModal();
+	};
+
+	// document.querySelector(".modal-box h3").innerText = id;
 };
 
 loadPlantByCategory(0);

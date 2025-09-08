@@ -309,9 +309,9 @@ const modalHandler = (id) => {
 				${plant.name}
 			</h3>
 			<!-- Image -->
-			<div class="h-[300px]">
+			<div>
 				<img
-					class="object-cover max-h-full w-full rounded-lg"
+					class="object-cover max-h-[300px] w-full rounded-lg"
 					src="${plant.image}"
 					alt=""
 				/>

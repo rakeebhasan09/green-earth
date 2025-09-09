@@ -26,34 +26,6 @@
         <td>If used before assigned a value, </br>
         it goes into the Temproal Dead Zone(TDZ)</td>
     </tr>
-    <tr>
-        <td>
-            <pre>
-                <code>
-console.log(myName); // undefined
-var myName = "rakeeb hasan";
-                </code>
-            </pre>
-        </td>
-        <td>
-            <pre>
-                <code>
-console.log(a); // ❌ ReferenceError:
-Cannot access 'a' before initialization
-let a = 5;
-                </code>
-            </pre>
-        </td>
-        <td>
-            <pre>
-                <code>
-console.log(a); // ❌ ReferenceError:
-Cannot access 'a' before initialization
-let a = 5;
-                </code>
-            </pre>
-        </td>
-    </tr>
 </table>
 
 ---

@@ -92,8 +92,7 @@ const loadPlantByCategory = (id) => {
 			.then((plantsRes) => plantsRes.json())
 			.then((plantsData) => {
 				const totalPlants = plantsData.plants;
-				const limitedPlants = totalPlants.slice(0, 6);
-				displayPlantsByCategory(limitedPlants);
+				displayPlantsByCategory(totalPlants);
 			});
 		return;
 	}
@@ -180,6 +179,7 @@ document.getElementById("all-plants-parent").addEventListener("click", (e) => {
 const handleAddToCart = (e) => {
 	const card = e.target.closest(".product-cart");
 	const cardTitle = card.querySelector("h4").innerText;
+	alert(`${cardTitle} has been added to the cart.`);
 	const plantID = e.target.parentNode.parentNode.id;
 	const price = Number(
 		e.target.parentNode.children[0].children[1].children[0].innerText

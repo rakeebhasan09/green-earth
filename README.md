@@ -18,10 +18,13 @@
     </tr>
     <tr>
         <td>
-            If used before assigned a value, it will give undefined.
+            If used before assigned a value,
+            it will give undefined.
         </td>
-        <td>If used before assigned a value, it goes into the Temproal Dead Zone(TDZ)</td>
-        <td>If used before assigned a value, it goes into the Temproal Dead Zone(TDZ)</td>
+        <td>If used before assigned a value,
+        it goes into the Temproal Dead Zone(TDZ)</td>
+        <td>If used before assigned a value,
+        it goes into the Temproal Dead Zone(TDZ)</td>
     </tr>
     <tr>
         <td>

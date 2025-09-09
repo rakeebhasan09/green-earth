@@ -35,7 +35,8 @@ var myName = "rakeeb hasan";
         <td>
             <pre>
                 <code>
-console.log(a); // ❌ ReferenceError: Cannot access 'a' before initialization
+console.log(a); // ❌ ReferenceError:
+Cannot access 'a' before initialization
 let a = 5;
                 </code>
             </pre>
@@ -43,7 +44,8 @@ let a = 5;
         <td>
             <pre>
                 <code>
-console.log(a); // ❌ ReferenceError: Cannot access 'a' before initialization
+console.log(a); // ❌ ReferenceError:
+Cannot access 'a' before initialization
 let a = 5;
                 </code>
             </pre>
